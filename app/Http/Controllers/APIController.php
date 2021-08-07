@@ -100,7 +100,7 @@ class APIController extends Controller
         $day_today = date("d", strtotime($date_today));
         $current_month = date("m", strtotime($date_today));
         $current_year = date("Y", strtotime($date_today));
-        $hour = date("H", strtotime($date_today));
+        $hour = date("H:i", strtotime($date_today));
 
         for ($i = 0; $i < count($notificacoes); $i++) {
             $lembretes = Lembretes::where("id", $notificacoes[$i]->id_lembrete)->get();
@@ -114,7 +114,7 @@ class APIController extends Controller
 
                     if ($lembrete->repetir == 1 && $notificacoes[$i]->status != 3) {
                         switch ($date_today) {
-                            case $day_today == $notificacoes_day && $current_month == $notificacoes_month && $current_year == $notificacoes_year && $hour == "08":
+                            case $day_today == $notificacoes_day && $current_month == $notificacoes_month && $current_year == $notificacoes_year && $hour == "08:00":
                                 $json[$i] = [
                                     "id" => $notificacoes[$i]->id,
                                     "data_lembrete" => $notificacoes[$i]->lembrete,
@@ -123,7 +123,7 @@ class APIController extends Controller
                                     "descricao" => $lembrete->descricao,
                                 ];
                                 break;
-                            case $day_today > $notificacoes_day && $current_month == $notificacoes_month && $current_year == $notificacoes_year && $hour == "08":
+                            case $day_today > $notificacoes_day && $current_month == $notificacoes_month && $current_year == $notificacoes_year && $hour == "08:00":
                                 if ($notificacoes[$i]->status == 1) {
                                     $notificacoes[$i]->status = 2;
                                     $notificacoes[$i]->save();
@@ -144,7 +144,7 @@ class APIController extends Controller
                                     "descricao" => $lembrete->descricao,
                                 ];
                                 break;
-                            case $day_today < $notificacoes_day && $current_month > $notificacoes_month && $current_year == $notificacoes_year && $hour == "08":
+                            case $day_today < $notificacoes_day && $current_month > $notificacoes_month && $current_year == $notificacoes_year && $hour == "08:00":
                                 if ($notificacoes[$i]->status == 1) {
                                     $notificacoes[$i]->status = 2;
                                     $notificacoes[$i]->save();
@@ -165,7 +165,7 @@ class APIController extends Controller
                                     "descricao" => $lembrete->descricao,
                                 ];
                                 break;
-                            case $day_today > $notificacoes_day && $current_month > $notificacoes_month && $current_year == $notificacoes_year && $hour == "08":
+                            case $day_today > $notificacoes_day && $current_month > $notificacoes_month && $current_year == $notificacoes_year && $hour == "08:00":
                                 if ($notificacoes[$i]->status == 1) {
                                     $notificacoes[$i]->status = 2;
                                     $notificacoes[$i]->save();
@@ -186,7 +186,7 @@ class APIController extends Controller
                                     "descricao" => $lembrete->descricao,
                                 ];
                                 break;
-                            case $day_today == $notificacoes_day && $current_month == $notificacoes_month && $current_year > $notificacoes_year && $hour == "08":
+                            case $day_today == $notificacoes_day && $current_month == $notificacoes_month && $current_year > $notificacoes_year && $hour == "08:00":
                                 if ($notificacoes[$i]->status == 1) {
                                     $notificacoes[$i]->status = 2;
                                     $notificacoes[$i]->save();
@@ -207,7 +207,7 @@ class APIController extends Controller
                                     "descricao" => $lembrete->descricao,
                                 ];
                                 break;
-                            case $day_today > $notificacoes_day && $current_month < $notificacoes_month && $current_year > $notificacoes_year && $hour == "08":
+                            case $day_today > $notificacoes_day && $current_month < $notificacoes_month && $current_year > $notificacoes_year && $hour == "08:00":
                                 if ($notificacoes[$i]->status == 1) {
                                     $notificacoes[$i]->status = 2;
                                     $notificacoes[$i]->save();
@@ -228,7 +228,7 @@ class APIController extends Controller
                                     "descricao" => $lembrete->descricao,
                                 ];
                                 break;
-                            case $day_today < $notificacoes_day && $current_month < $notificacoes_month && $current_year > $notificacoes_year && $hour == "08":
+                            case $day_today < $notificacoes_day && $current_month < $notificacoes_month && $current_year > $notificacoes_year && $hour == "08:00":
                                 if ($notificacoes[$i]->status == 1) {
                                     $notificacoes[$i]->status = 2;
                                     $notificacoes[$i]->save();
@@ -257,7 +257,7 @@ class APIController extends Controller
                         $dayWeek_today = date("N", strtotime($date_today));
 
                         switch ($dayWeek_today) {
-                            case $dayWeek_today === $notificacoes_dayWeek && $hour == "08":
+                            case $dayWeek_today === $notificacoes_dayWeek && $hour == "08:00":
                                 $json[$i] = [
                                     "id" => $notificacoes[$i]->id,
                                     "data_lembrete" => $notificacoes[$i]->lembrete,
@@ -266,7 +266,7 @@ class APIController extends Controller
                                     "descricao" => $lembrete->descricao,
                                 ];
                                 break;
-                            case $dayWeek_today > $notificacoes_dayWeek && $hour == "08":
+                            case $dayWeek_today > $notificacoes_dayWeek && $hour == "08:00":
                                 if ($notificacoes[$i]->status == 1) {
                                     $notificacoes[$i]->status = 2;
                                     $notificacoes[$i]->save();
@@ -291,7 +291,7 @@ class APIController extends Controller
 
                     } elseif ($lembrete->repetir == 3 && $notificacoes[$i]->status != 3) {
                         switch ($day_today) {
-                            case $day_today == $notificacoes_day && $hour == "08":
+                            case $day_today == $notificacoes_day && $hour == "08:00":
                                 $json[$i] = [
                                     "id" => $notificacoes[$i]->id,
                                     "data_lembrete" => $notificacoes[$i]->lembrete,
@@ -300,7 +300,7 @@ class APIController extends Controller
                                     "descricao" => $lembrete->descricao,
                                 ];
                                 break;
-                            case $day_today > $notificacoes_day && $hour == "08":
+                            case $day_today > $notificacoes_day && $hour == "08:00":
                                 if ($notificacoes[$i]->status == 1) {
                                     $notificacoes[$i]->status = 2;
                                     $notificacoes[$i]->save();
